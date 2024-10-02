@@ -1,0 +1,75 @@
+<%- include('../partials/header.ejs') %>
+
+<body >
+	
+	<%- include('../partials/nav.ejs') %>
+
+		
+
+
+
+
+	<!-- Product -->
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+                <div class="category" >
+                <span><h3><%= category %></h3></span>
+                <span><i class="fa fa-angle-double-right"></i><i class="fa fa-angle-double-right"></i></span>
+            </div>
+            <div class="row">
+                <% products.forEach(product => { 
+                    if (product) { %>
+                    <div class="col-6 col-md-3 col-lg-2 px-0 p-b-35 isotope-item women">
+                        <!-- Block2 -->
+                        <div class="product-card">
+                            <div class="image-container">
+                                <a href="/product/<%= product.category %>/<%= product.slug %>">
+                                    <img src="images/<%= product.previewImage %>" alt="Product Image">
+                                </a>
+                                <div class="action-buttons">
+                                    <a href="#" class="add-to-cart js-show-modal1" data-id="<%= product.id %>">Quick View</a>
+                                    <div class="icons">
+                                        <i class="fa fa-heart"></i>
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <i class="fa fa-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <a href="/product/<%= product.category %>/<%= product.slug %>" class="product-name">
+                                    <%= product.name %>
+                                </a>
+                                <div class="price">
+                                    <% if (product.discountPrice) { %>
+                                        <span class="discount-price">৳ <%= product.discountPrice %></span>
+                                        <span class="regular-price"><strike>৳ <%= product.regularPrice %></strike></span>
+                                        <span class="discount"><%= Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)%>% OFF</span>
+                                    <% } else { %>
+                                        <span class="regular-price">৳ <%= product.regularPrice %></span>
+                                    <% } %>
+                                    <a href="/product/<%= product.category %>/<%= product.slug %>">
+                                        <div class="buy-now">BUY NOW</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } 
+                }); %>
+            </div>
+            
+
+
+
+	</section>
+
+
+	
+
+
+        <%- include('../partials/bottom-nav.ejs') %>
+
+        <%- include('../partials/footer.ejs') %>
+
+
+	

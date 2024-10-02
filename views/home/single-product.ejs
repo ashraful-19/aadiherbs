@@ -1,0 +1,478 @@
+<%- include('../partials/header.ejs') %>
+
+<body >
+
+
+	<%- include('../partials/nav.ejs') %>
+	<style>
+  .new-option-container {
+    margin-bottom: 20px;
+  }
+  .new-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .new-option.selected {
+    background-color: lightblue;
+  }
+  .hidden-checkbox {
+    
+  }
+	</style>
+		
+
+	<!-- Product Detail -->
+	<section class="sec-product-detail p-t-20 p-b-60">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-5">
+					<div class="p-l-25 p-r-30 p-lr-0-lg">
+						<div class="wrap-slick3 flex-sb flex-w">
+							<div class="wrap-slick3-dots"></div>
+							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+							<div class="slick3 gallery-lb">
+								<% product.images.forEach((image, index) => { %>
+								<div class="item-slick3" data-thumb="/images/<%= image.filename %>">
+									<div class="wrap-pic-w pos-relative">
+										<img src="/images/<%= image.filename %>" alt="IMG-PRODUCT">
+	
+										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="/images/<%= image.filename %>">
+											<i class="fa fa-expand"></i>
+										</a>
+									</div>
+								</div>
+								<% }); %>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				<div class="col-md-6 col-lg-7 p-b-30">
+					<div class="p-r-50 p-t-5 p-lr-0-lg">
+						<h4 class="mtext-105 cl2 new-js-name-detail p-b-14">
+							<%= product.name %>
+						</h4>
+<p class="p-b-14 product-type"> <span style="background: #f1a1ff40;">Brand: <%= product.brand %></span><span style="background: #e9ffbf85;">Code: <%= product.productCode %></span> <span style="background: #ebdbff85;">Sold: <span id="new-available-stock" style="background: #ebdbff85; margin:0px;padding:0px"><%= product.stockQuantity %></span></span></p><span class="mtext-106 cl2">
+							<% if (product.discountPrice) { %>
+								<span style="font-weight: 700; color:#282c3f; font-size: 24px;">৳ <span class="new-discountPrice new-sellingPrice"><%= product.discountPrice %></span></span>
+							<% } else { %>
+							<span style="font-weight: 700; color:#282c3f; font-size: 24px;">৳ <span class="new-regularPrice new-sellingPrice"><%= product.regularPrice %></span></span>
+							<% } %>
+						</span>
+						
+						<% if (product.discountPrice && product.regularPrice) { %>
+							<span style="font-size: 18px; color:rgb(114, 114, 114); font-weight: 400!important;">
+								MPR <strike>৳ <span class="new-regularPrice"><%= product.regularPrice %></span></strike>
+							</span>
+							<span class="mtext-106 cl2">
+								<span class="new-percentage" style="color: #673AB7; font-family: Assistant; font-weight: 400;"><%= Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)%>%OFF</span>
+							</span>
+						<% } %>
+						<div id="new-selected-value" style="display: none;"></div>
+						<div class="new-discountPrice" style="display: none;"></div>
+						
+						<% if (product.isFreeDelivery === true) { %>
+							<p style="color:rgb(50, 137, 50)">FREE DELIVERY</p>
+						<% } %>
+	
+						<p class="stext-102 cl3 p-t-23 p-b-23">
+							<%= product.shortDescription %>
+						</p>
+						
+						<div id="new-option-container"></div>
+						
+						<div class="flex-w flex-r-m p-b-10">
+							<div class="size-203">
+								ITEM
+							</div>
+	
+							<div class="wrap-num-product">
+								<div class="btn-num-product-down">
+									<i class="fs-16 zmdi zmdi-minus"></i>
+								</div>
+								<input class="num-product quantity" id="new-quantity" type="text" name="num-product" value="1" min="1">
+								<div class="btn-num-product-up">
+									<i class="fs-16 zmdi zmdi-plus"></i>
+								</div>
+							</div>
+
+						</div>
+	
+						<div class="flex-r-m p-b-10 p-t-24">
+							<button id="new-add-to-cart" class="flex-c-m stext-101 cl0 size-107 bg7 hov-btn1 p-lr-15 trans-04 m-r-11" style="border-radius: 5px;">
+								Add to cart
+							</button>
+	
+							<button id="new-buy-now" class="flex-c-m stext-101 cl0 size-107 bg7 hov-btn1 p-lr-15 trans-04" style="border-radius: 5px;">
+								BUY NOW
+							</button>
+						</div>
+	
+							<div class="flex-w flex-m p-t-25">
+								<a href="https://wa.me/8801772512057" class="whatsapp-button" target="_blank">
+									<i class="fa fa-whatsapp"></i> Live Chat on Whatsapp 
+								</a>
+							</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="p-b-40">
+				<!-- Tab01 -->
+				<div class="tab01">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item p-b-10">
+							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+						</li>
+	
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews</a>
+						</li>
+					</ul>
+	
+					<!-- Tab panes -->
+					<div class="tab-content p-t-43">
+						<!-- - -->
+						<div class="tab-pane fade show active" id="description" role="tabpanel">
+							<div>
+								<p class="stext-102 cl6">
+									<%= product.description %>	
+								</p>
+							</div>
+						</div>
+	<style> 
+	.nav-item{
+		flex-direction: column!important;
+		width: auto;
+	} 
+	</style>
+						<!-- - -->
+						<div class="tab-pane fade" id="reviews" role="tabpanel">
+							<div class="row">
+								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+									<div class="p-b-30 m-lr-15-sm">
+										<h1>Our developer is working on here</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+
+<style>
+	
+	label> input{
+		display: none;
+	}
+	.option{
+		padding: 5px 10px;
+		border-radius: 5px;
+		margin-right: 4px;
+	}
+
+</style>
+
+
+	<!-- Related Products -->
+	<section class="sec-relate-product bg0 p-t-45 p-b-105">
+		<div class="container">
+			<div class="p-b-45">
+				<h3 class="ltext-106 cl5 txt-center">
+					Related Products
+				</h3>
+			</div>
+
+			<!-- Slide2 -->
+			<div class="wrap-slick2">
+				<div class="slick2">
+					<% products.forEach(product => { %>
+							<div class="item-slick2 p-t-15 p-b-15">
+							<div class="px-0 p-b-35 isotope-item women">
+								<!-- Block2 -->
+								<div class="product-card">
+									<div class="image-container">
+										<a href="/product/<%= product.category %>/<%= product.slug %>">	<img src="/images/<%= product.previewImage %>" alt="Product Image"></a>
+										<div class="action-buttons">
+											<a href="#" class="add-to-cart js-show-modal1" data-id="<%= product.id %>">Quick View</a>
+											<div class="icons">
+												<i class="fa fa-heart"></i>
+												<i class="fa fa-shopping-cart"></i>
+												<i class="fa fa-eye"></i>
+											</div>
+										</div>
+									</div>
+									<div class="product-details">
+										<a href="/product/<%= product.category %>/<%= product.slug %>" class="product-name">
+											<%= product.name %> Tranding goods and services
+										</a>
+										<div class="price">
+											<% if (product.discountPrice) { %>
+												<span class="discount-price">৳ <%= product.discountPrice %>7</span>
+												<span class="regular-price"><strike>৳ <%= product.regularPrice %>9</strike></span>
+												<span class="discount"><%= Math.round(((product.discountPrice - product.regularPrice) / product.discountPrice) * 10) %>%OFF</span>
+											<% } else { %>
+												<span class="regular-price">৳ <%= product.regularPrice %></span>
+											<% } %>
+											<a href="/product/<%= product.category %>/<%= product.slug %>">	<div class="buy-now">BUY NOW</div></a>
+										</div>
+									</div>
+								</div>
+							</div>
+									
+						</div>
+						
+						<% }); %>
+
+						
+
+				</div>
+			</div>
+		</div>
+	</section>
+		
+	<%- include('../partials/bottom-nav.ejs') %>
+
+
+	<script>
+const newProductOptions = {<%- product.variableCost %>} ;
+console.log(newProductOptions)
+		
+const newOptionContainer = document.getElementById('new-option-container');
+const newRegularPrices = document.querySelectorAll('.new-regularPrice');
+const newDiscountPrices = document.querySelectorAll('.new-discountPrice');
+const newPercentages = document.querySelectorAll('.new-percentage');
+const newAvailableStock = document.getElementById('new-available-stock');
+const newSelectedValue = document.getElementById('new-selected-value');
+
+// Object to store selected values for each category
+const newSelectedValues = {};
+
+// Function to calculate the saved percentage
+function calculateSavedPercentage(newSellingPrice, newDiscountedPrice) {
+  return ((newSellingPrice - newDiscountedPrice) / newSellingPrice) * 100;
+}
+
+// Function to update the selected value display as formatted JSON
+function updateNewSelectedValueDisplay() {
+  newSelectedValue.textContent = JSON.stringify(newSelectedValues, null, 2);
+}
+
+// Render product options
+for (const newCategory in newProductOptions) {
+  newOptionContainer.innerHTML += `<div class="flex-w flex-r-m p-b-10" id="${newCategory}-container"></div>`;
+  const newCategoryContainer = document.getElementById(`${newCategory}-container`);
+  newCategoryContainer.innerHTML += `<div class="size-203">${newCategory.toUpperCase()}</div>`;
+  let isFirstOption = true;
+  for (const newOption in newProductOptions[newCategory]) {
+    const { sellingPrice: newSellingPrice, discountPrice: newDiscountPrice, stock: newStock } = newProductOptions[newCategory][newOption];
+    const newCheckedAttribute = isFirstOption ? 'checked' : '';
+    const newSelectedClass = isFirstOption ? 'selected' : '';
+    newCategoryContainer.innerHTML += `
+      <label class="option ${newSelectedClass}" for="${newCategory}-${newOption}">
+        <input type="checkbox" class="hidden-checkbox" id="${newCategory}-${newOption}" name="${newCategory}" value="${newOption}" ${newCheckedAttribute}>
+        ${newOption}
+      </label>`;
+    // Update selected values object with initial selection
+    if (isFirstOption) {
+      newSelectedValues[newCategory] = newOption;
+      isFirstOption = false;
+    }
+  }
+}
+
+// Update initial display with first selected options
+const initialNewSelectedValues = Object.entries(newSelectedValues);
+initialNewSelectedValues.forEach(([newCategory, newSelectedOption]) => {
+  const { sellingPrice: newSellingPrice, discountPrice: newDiscountPrice, stock: newStock } = newProductOptions[newCategory][newSelectedOption];
+  const newSavedPercentage = calculateSavedPercentage(newSellingPrice, newDiscountPrice);
+  newRegularPrices.forEach(newRegularPriceElement => {
+    newRegularPriceElement.textContent = `${newSellingPrice}`; // Update regular price in all elements
+  });
+  newDiscountPrices.forEach(newDiscountPriceElement => {
+    newDiscountPriceElement.textContent = `${newDiscountPrice}`;
+  });
+  newPercentages.forEach(newPercentage => {
+    newPercentage.textContent = `${newSavedPercentage.toFixed(0)}%OFF`;
+  });
+  newAvailableStock.textContent = `${newStock}`;
+});
+
+// Add event listener to update price display and selected value
+newOptionContainer.addEventListener('click', (event) => {
+  if (event.target.type === 'checkbox') {
+    console.log("Checkbox clicked");
+    const newCheckbox = event.target;
+    const newLabel = newCheckbox.parentElement;
+    console.log("Label:", newLabel);
+    const newCategory = newCheckbox.name;
+    console.log("Category:", newCategory);
+    const newSelectedOption = newCheckbox.value;
+    console.log("Selected Option:", newSelectedOption);
+    const { sellingPrice: newSellingPrice, discountPrice: newDiscountPrice, stock: newStock } = newProductOptions[newCategory][newSelectedOption];
+    console.log("Selling Price:", newSellingPrice);
+    console.log("Discount Price:", newDiscountPrice);
+    console.log("Stock:", newStock);
+    const newSavedPercentage = calculateSavedPercentage(newSellingPrice, newDiscountPrice);
+    newRegularPrices.forEach(newRegularPriceElement => {
+      newRegularPriceElement.textContent = `${newSellingPrice}`; // Update regular price in all elements
+    });
+    newDiscountPrices.forEach(newDiscountPriceElement => {
+      newDiscountPriceElement.textContent = `${newDiscountPrice}`;
+    });
+    newPercentages.forEach(newPercentage => {
+      newPercentage.textContent = `${newSavedPercentage.toFixed(0)}%OFF`;
+    });
+    newAvailableStock.textContent = `${newStock}`;
+    // Update selected values object
+    newSelectedValues[newCategory] = newSelectedOption;
+    // Remove 'selected' class from all options
+    const allNewOptions = document.querySelectorAll(`input[name="${newCategory}"]`);
+    allNewOptions.forEach(newOption => {
+      const newLabel = newOption.parentElement;
+      newLabel.classList.remove('selected');
+    });
+    // Add 'selected' class to the clicked option
+    newLabel.classList.toggle('selected');
+    // Update the selected value display
+    updateNewSelectedValueDisplay();
+  }
+});
+
+// Automatically trigger update of selected values after 3 seconds
+setTimeout(updateNewSelectedValueDisplay, 1000);
+</script>
+
+<%- include('../partials/footer.ejs') %>
+
+<div id="new-spinner" style="display: none; text-align: center; margin-top: 10px;">
+  <i class="fas fa-spinner fa-spin"></i> Adding...
+</div>
+
+<script>
+$(document).ready(function() {
+  function getNewProductData() {
+    // Get data values
+    var newProductName = '<%= product.name %>';
+    var newSellingPrice = $('span.new-sellingPrice').text().trim();
+    var newQuantity = $('#new-quantity').val(); // Assuming you have an input with id "new-quantity"
+    var newMetaData = $('#new-selected-value').text().trim(); // Make sure this element contains the correct metadata
+    var newProductImage = '<%= product.previewImage %>';
+    var newProductCode = '<%= product.productCode %>';
+    var newProductId = '<%= product.id %>';
+    var newDeliveryInside = '<%= product.insideDhaka %>';
+    var newDeliveryOutside = '<%= product.outsideDhaka %>';
+
+    var newDataToSend = {
+      productName: newProductName,
+      sellingPrice: newSellingPrice,
+      quantity: newQuantity,
+      metaData: newMetaData,
+      productImage: newProductImage,
+      productCode: newProductCode,
+      productId: newProductId,
+      insideDhaka: newDeliveryInside,
+      outsideDhaka: newDeliveryOutside,
+    };
+
+    return newDataToSend;
+  }
+
+  $('#new-add-to-cart').on('click', function() {
+    var newDataToSend = getNewProductData();
+
+    // Change button text to "Adding..."
+    $('#new-add-to-cart').text('Adding...');
+
+    // Show spinner
+    $('#new-spinner').show();
+
+    // Send AJAX POST request
+    $.ajax({
+      type: 'POST',
+      url: '/add-to-cart',
+      data: newDataToSend,
+      success: function(response) {
+        
+		var newCartItemsHtml = response.cart.map(item => {
+    var metaData;
+    try {
+        metaData = JSON.parse(item.metaData);
+    } catch (e) {
+        console.error('Error parsing JSON for metaData:', e);
+        metaData = {}; // or handle this case gracefully
+    }
+
+    var metaDataHtml = Object.keys(metaData).map(key => `
+        <span class="metaData">${key.charAt(0).toUpperCase() + key.slice(1).toLowerCase()}: ${metaData[key]}</span>
+    `).join('');	
+
+    return `
+	<li class="header-cart-item flex-w flex-t m-b-12" data-id="${item.id}">
+			<span class="cart-trash"><i class="fa fa-trash"></i></span>
+            <div class="header-cart-item-img">
+                <img class="cart-image" src="/images/${item.productImage}" alt="IMG">
+            </div>
+            <div class="header-cart-item-txt p-t-8">
+                <a href="#" class="header-cart-item-name hov-cl1 trans-04">
+                    ${item.productName}
+                </a>
+                ${metaDataHtml}
+                <span class="header-cart-item-info">
+                    <span class="quantity-cart">${item.quantity}</span> x 
+                    <span class="sellingPrice-cart">${item.sellingPrice}</span> = 
+                    <span class="sub-total-single">${item.sellingPrice * item.quantity}</span>
+                </span>
+            </div>
+        </li>
+    `;
+}).join('');
+
+
+                $('.header-cart-wrapitem').html(newCartItemsHtml);
+
+
+        setTimeout(function() {
+          $('#new-add-to-cart').text('Added');
+		  calculateTotal();
+		$('.js-panel-cart').addClass('show-header-cart');
+        }, 2000);
+      },
+      error: function(xhr, status, error) {
+        setTimeout(function() {
+          $('#new-add-to-cart').text('Add to Cart');
+        }, 2000);
+
+        console.error('Error:', error);
+      }
+    });
+  });
+
+  $('#new-buy-now').on('click', function() {
+    var newDataToSend = getNewProductData();
+
+    // Send AJAX POST request
+    $.ajax({
+      type: 'POST',
+      url: '/add-to-cart?buy=true',
+      data: newDataToSend,
+      success: function(response) {
+        window.location.href = "/checkout";
+        console.log("buy now");
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', error);
+      }
+    });
+  });
+});
+</script>

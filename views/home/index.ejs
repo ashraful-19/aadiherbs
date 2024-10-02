@@ -1,0 +1,137 @@
+<%- include('../partials/header.ejs') %>
+
+<body>
+	
+	<%- include('../partials/nav.ejs') %>
+<div class="container">
+	<div class="row">	
+		<div class="slider m-t-15">
+			<div class="slides">
+				<div class="slide"><a href="/"><img src="https://beautybooth.com.bd/_next/image?url=https%3A%2F%2Fadmin.beautybooth.com.bd%2F%2Fuploads%2Fall%2FPwuA5xUGmAYeRZGOLx0Pio0IgBzBZzUX8NmpE1P2.jpg&w=1920&q=75" alt="Image 1"></a></div>
+				<div class="slide"><img src="https://beautybooth.com.bd/_next/image?url=https%3A%2F%2Fadmin.beautybooth.com.bd%2F%2Fuploads%2Fall%2FW5nOm0YOKf9JQnZ9lWp0BhGvnyU7e00e7Boptehi.jpg&w=1920&q=75" alt="Image 2"></div>
+				<div class="slide"><img src="https://beautybooth.com.bd/_next/image?url=https%3A%2F%2Fadmin.beautybooth.com.bd%2F%2Fuploads%2Fall%2F7KmPnVGzv3n9aeJdyUNLq88W8MM3HZzIEFZ5eq7r.jpg&w=1920&q=75" alt="Image 3"></div>
+			</div>
+			<div class="navigation">
+				<div class="prev"><i class="fa fa-angle-left"></i></div>
+				<div class="next"><i class="fa fa-angle-right"></i></div>
+			</div>
+			<div class="dots">
+				<span class="dot active"></span>
+				<span class="dot"></span>
+				<span class="dot"></span>
+			</div>
+		</div>
+	</div>
+</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelector('.slides');
+    const dots = document.querySelectorAll('.dot');
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+    let index = 0;
+
+    const updateDots = () => {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    };
+
+    const showSlide = (n) => {
+        index = (n + dots.length) % dots.length;
+        slides.style.transform = `translateX(-${index * 100}%)`;
+        updateDots();
+    };
+
+    const nextSlide = () => {
+        showSlide(index + 1);
+    };
+
+    const prevSlide = () => {
+        showSlide(index - 1);
+    };
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => showSlide(i));
+    });
+
+    next.addEventListener('click', nextSlide);
+    prev.addEventListener('click', prevSlide);
+
+    setInterval(nextSlide, 4000); // Auto-slide every 2 seconds
+    showSlide(index);
+});
+
+
+	</script>
+
+		
+
+
+
+
+	<!-- Product -->
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+            <a href="/product/best-seller"><div class="category" >
+                <span><h3>Best Selling Products</h3></span>
+                <span><i class="fa fa-angle-double-right"></i><i class="fa fa-angle-double-right"></i></span>
+            </div>
+            </a>
+            <div class="row">
+                <% products.forEach(product => { 
+                    if (product.isBestSeller) { %>
+                    <div class="col-6 col-md-3 col-lg-2 px-0 p-b-35 isotope-item women">
+                        <!-- Block2 -->
+                        <div class="product-card">
+                            <div class="image-container">
+                                <a href="/product/<%= product.category %>/<%= product.slug %>">
+                                    <img src="images/<%= product.previewImage %>" alt="Product Image">
+                                </a>
+                                <div class="action-buttons">
+                                    <a href="#" class="add-to-cart js-show-modal1" data-id="<%= product.id %>">Quick View</a>
+                                    <div class="icons">
+                                        <i class="fa fa-heart"></i>
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <i class="fa fa-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <a href="/product/<%= product.category %>/<%= product.slug %>" class="product-name">
+                                    <%= product.name %>
+                                </a>
+                                <div class="price">
+                                    <% if (product.discountPrice) { %>
+                                        <span class="discount-price">৳ <%= product.discountPrice %></span>
+                                        <span class="regular-price"><strike>৳ <%= product.regularPrice %></strike></span>
+                                        <span class="discount"><%= Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)%>% OFF</span>
+                                    <% } else { %>
+                                        <span class="regular-price">৳ <%= product.regularPrice %></span>
+                                    <% } %>
+                                    <a href="/product/<%= product.category %>/<%= product.slug %>">
+                                        <div class="buy-now">BUY NOW</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } 
+                }); %>
+            </div>
+            
+
+
+
+	</section>
+
+
+	
+
+
+        <%- include('../partials/bottom-nav.ejs') %>
+
+        <%- include('../partials/footer.ejs') %>
+
+
+	
