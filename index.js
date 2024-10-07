@@ -76,6 +76,7 @@ app.get('/', async (req, res) => {
     const products = await Product.find({ isInStock: true });
     const cart = req.session.cart;
     res.render('home/index', { products,cart });
+    console.log(products)
   } catch (error) {
     console.error('Error retrieving products:', error);
     res.status(500).send('Internal Server Error');
