@@ -217,7 +217,7 @@
 										</a>
 										<div class="price">
 											<% if (product.discountPrice) { %>
-												<span class="discount-price">৳ <%= product.discountPrice %>7</span>
+												<span class="discount-price">৳ <%= product.discountPrice %></span>
 												<span class="regular-price"><strike>৳ <%= product.regularPrice %>9</strike></span>
 												<span class="discount"><%= Math.round(((product.discountPrice - product.regularPrice) / product.discountPrice) * 10) %>%OFF</span>
 											<% } else { %>

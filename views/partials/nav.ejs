@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<input type="text" class="insideDhaka" hidden>
 							<input type="text" class="outsideDhaka" hidden>
 					
-							<p style="color:rgb(50, 137, 50)" class="delivery-messeage p-t-20 p-b-20">FREE DELIVERY</p>
+							<!-- <p style="color:rgb(50, 137, 50)" class="delivery-message p-t-20 p-b-20" id="delivery-message">FREE DELIVERY</p> -->
 					
 							<p class="description">
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, beatae? Explicabo enim, quas at reiciendis eius eaque nisi eveniet porro repudiandae, odio quasi magni ratione reprehenderit illum minus numquam. Aliquid.
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					
 							<!--  -->
 							<div class="flex-w flex-m p-t-20">
-								<a href="https://wa.me/8801772512057" class="whatsapp-button" target="_blank">
+								<a href="https://wa.me/+8801556106697" class="whatsapp-button" target="_blank">
 									<i class="fa fa-whatsapp"></i> Live Chat on Whatsapp 
 								</a>
 							</div>
@@ -393,8 +393,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     $('.discountPrice.sellingPrice').text(response.product.discountPrice);
                 }
                 
-                if (response.product.isFreedelivery) {
-                    $('.delivery-messeage').remove();
+                if (response.product.isFreeDelivery) {
+                    $('.delivery-message').remove();
                 }
 
                 // Prepare array of image URLs
@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 $('.description').text(response.product.shortDescription);
                 $('.brand-name').text(`Brand: ${response.product.brand}`);
                 $('.product-code').text(`Code: ${response.product.productCode}`);
-                $('#available-stock').text(response.product.stockQuantity);
+                $('#available-stock').text(`Sold: ${response.product.stockQuantity}`);
                 $('input.cart-product-id').val(response.product._id);
                 $('input.insideDhaka').val(response.product.insideDhaka);
                 $('input.outsideDhaka').val(response.product.outsideDhaka);

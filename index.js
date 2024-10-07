@@ -73,7 +73,7 @@ next();
 
 app.get('/', async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({ isInStock: true });
     const cart = req.session.cart;
     res.render('home/index', { products,cart });
   } catch (error) {
@@ -89,7 +89,7 @@ app.get('/product/:category/:name', async (req, res) => {
   const product_category = req.params.category;
   console.log(product_category);
   const product = await Product.findOne({slug: product_id});
-  const products = await Product.find({category: product_category});
+  const products = await Product.find({category: product_category, isInStock: true});
   
   const cart = req.session.cart;
     res.render('home/single-product', { products,product, cart });
@@ -105,7 +105,7 @@ app.get('/product/:category', async (req, res) => {
   const product_cat = req.params.category;
   const category = req.query.category;
   console.log(product_cat)
-    const products = await Product.find({category: product_cat});
+    const products = await Product.find({category: product_cat, isInStock: true});
     console.log(products)
     const cart = req.session.cart;
     res.render('home/category', { products, cart, category });
