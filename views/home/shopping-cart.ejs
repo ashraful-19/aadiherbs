@@ -329,11 +329,13 @@ padding-right: 5px;
 
         var rowMainElements = document.querySelectorAll('.row-main');
         if (rowMainElements.length > 1) {
-            if (subTotal > 5000) {
+			//dhakr baire
+            if (subTotal > 1000) {
                 console.log("Setting #inside and #outside to 0");
                 document.getElementById('inside').value = '0';
                 document.getElementById('outside').value = '0';
-            } else if (subTotal > 999) {
+            } else if (subTotal > 1000) {
+				//dhakar vitore
                 console.log("Setting #inside to 0 and #outside to 120");
                 document.getElementById('inside').value = '0';
                 document.getElementById('outside').value = '120';
