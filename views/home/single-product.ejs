@@ -1,5 +1,32 @@
 <%- include('../partials/header.ejs') %>
 
+<style>
+	/* Table responsiveness styles */
+	
+	.table-container {
+		overflow-x: auto;
+		width: 100%;
+	}
+
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th, td {
+		padding: 10px;
+		border: 1px solid #ccc;
+		text-align: left;
+	}
+
+	@media screen and (max-width: 600px) {
+		th, td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+	}
+</style>
 <body >
 
 
@@ -142,7 +169,7 @@
 						<div class="tab-pane fade show active" id="description" role="tabpanel">
 							<div>
 								<p class="stext-102 cl6">
-									<%= product.description %>	
+									<%- product.description %>	
 								</p>
 							</div>
 						</div>
@@ -218,8 +245,8 @@
 										<div class="price">
 											<% if (product.discountPrice) { %>
 												<span class="discount-price">৳ <%= product.discountPrice %></span>
-												<span class="regular-price"><strike>৳ <%= product.regularPrice %>9</strike></span>
-												<span class="discount"><%= Math.round(((product.discountPrice - product.regularPrice) / product.discountPrice) * 10) %>%OFF</span>
+												<span class="regular-price"><strike>৳ <%= product.regularPrice %></strike></span>
+												<span class="discount"><%= Math.round(((product.regularPrice - product.discountPrice) / product.regularPrice) * 100)%> %OFF</span>
 											<% } else { %>
 												<span class="regular-price">৳ <%= product.regularPrice %></span>
 											<% } %>
@@ -476,3 +503,4 @@ $(document).ready(function() {
   });
 });
 </script>
+

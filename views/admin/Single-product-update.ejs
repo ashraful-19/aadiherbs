@@ -6,6 +6,7 @@
 <title>Add Product - Admin Panel</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 
 </head>
 <body>
@@ -40,13 +41,13 @@
       
       <div class="form-group">
           <label for="short-description">Short Description:</label>
-          <textarea class="form-control" id="short-description" name="shortDescription" rows="4"><%= product.shortDescription %></textarea>
+          <textarea class="form-control editor" id="short-description" name="shortDescription" rows="4"><%= product.shortDescription %></textarea>
       </div>
     
   
       <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control" id="description" name="description" rows="4"><%= product.description %></textarea>
+        <textarea class="form-control editor" id="description" name="description" rows="4"><%= product.description %></textarea>
       </div>
   
     
@@ -338,4 +339,13 @@ function addImage(id, imageUrl) {
 
 
 
-
+<script>
+  // Find all elements with the class 'editor' and initialize CKEditor for each
+  document.querySelectorAll('.editor').forEach(editorElement => {
+    ClassicEditor
+      .create(editorElement)
+      .catch(error => {
+        console.error('There was a problem initializing CKEditor:', error);
+      });
+  });
+</script>
